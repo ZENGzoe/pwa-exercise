@@ -1,0 +1,69 @@
+*{
+    padding: 0;
+    margin:0;
+}
+body,html{
+    width:100%;
+}
+.container{
+    width:100%;
+}
+.searchBar{
+    width: 100%;
+    height:10vw;
+    overflow: hidden;
+}
+.searchBar input{
+    float: left;
+    width: 80%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0 2vw;
+    font-size: 3vw;
+    border: 1px solid #02cfd4;
+    border-right: none;
+}
+.searchBar button{
+    float: right;
+    width: 20%;
+    height: 100%;
+    border: none;
+    background: #02cfd4;
+    color: #fff;
+    font-size: 4vw;
+}
+.content{
+    padding: 5vw 0;
+}
+.content .list{
+    width: 90%;
+    box-sizing: border-box;
+    margin: 0 auto 3vw;
+    display: block;
+    overflow: hidden;
+    height: 15vw;    
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 2vw;
+}
+.content .pic{
+    float: left;
+    width: 30%;
+    height: 100%;
+    position: relative;
+    margin-right:3%;
+    overflow: hidden;
+}
+.content .pic img{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+}
+.content .title{
+    float: left;
+    width: 67%;
+    color: #666;
+    font-size: 3.8vw;
+    padding-top: 2.1vw;
+}
