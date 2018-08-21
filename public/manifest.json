@@ -1,0 +1,41 @@
+{
+    "name" : "新闻搜索",
+    "short_name" : "news",
+    "start_url" : "/",
+    "display" : "standalone",       
+    "background_color" : "#02cfd4",
+    "description" : "可以用于新闻搜索的小应用",
+    "theme_color" : "#02cfd4",
+    "orientation" : "any",
+    "icons" : [
+        {
+            "src" : "img/icon_32.png",
+            "sizes" : "32x32",
+            "type" : "image/png"
+        },{
+            "src" : "img/icon_72.png",
+            "sizes" : "72x72",
+            "type" : "image/png"
+        },{
+            "src" : "img/icon_128.png",
+            "sizes" : "128x128",
+            "type" : "image/png"
+        },{
+            "src" : "img/icon_144.png",
+            "sizes" : "144x144",
+            "type" : "image/png"
+        },{
+            "src" : "img/icon_192.png",
+            "sizes" : "192x192",
+            "type" : "image/png"
+        },{
+            "src" : "img/icon_256.png",
+            "sizes" : "256x256",
+            "type" : "image/png"
+        },{
+            "src" : "img/icon_512.png",
+            "sizes" : "512x512",
+            "type" : "image/png"
+        }
+    ] 
+}

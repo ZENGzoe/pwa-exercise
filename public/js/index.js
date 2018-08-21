@@ -6,6 +6,7 @@ var searchNews = {
         var searchBtn = document.querySelector('.J_searchBtn'),
             _this = this;
         searchBtn.addEventListener('touchend' , function(e){
+            document.querySelector('.J_loading').style.display = "block";
             _this.queryNews();
         } , false)
     },
@@ -31,6 +32,7 @@ var searchNews = {
                     res = xhr.responseText;
                 }
                 console.log(res);
+                document.querySelector('.J_loading').style.display = "none";
                 if(res.data.length == 0){
                     alert('搜索无结果！')
                 }else{

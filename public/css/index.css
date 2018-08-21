@@ -67,3 +67,8 @@ body,html{
     font-size: 3.8vw;
     padding-top: 2.1vw;
 }
+.loading{
+    display: none;
+    text-align: center;
+    font-size: 6vw;
+}

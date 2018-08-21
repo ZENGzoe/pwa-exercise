@@ -1,0 +1,26 @@
+[debug] [2018-08-20T07:23:04.607Z] ----------------------------------------------------------------------
+[debug] [2018-08-20T07:23:04.609Z] Command:       /usr/local/bin/node /usr/local/bin/firebase login --reauth
+[debug] [2018-08-20T07:23:04.610Z] CLI Version:   4.1.2
+[debug] [2018-08-20T07:23:04.610Z] Platform:      darwin
+[debug] [2018-08-20T07:23:04.610Z] Node Version:  v10.6.0
+[debug] [2018-08-20T07:23:04.611Z] Time:          Mon Aug 20 2018 15:23:04 GMT+0800 (GMT+08:00)
+[debug] [2018-08-20T07:23:04.611Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+[info] Visit this URL on any device to log in:
+[info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=587987858&redirect_uri=http%3A%2F%2Flocalhost%3A9005
+[info] 
+[info] Waiting for authentication...
+[debug] [2018-08-20T07:23:14.081Z] >>> HTTP REQUEST POST https://accounts.google.com/o/oauth2/token  
+
+[debug] [2018-08-20T07:23:14.428Z] Token Fetch Error: Error
+    at new FirebaseError (/usr/local/lib/node_modules/firebase-tools/lib/error.js:11:16)
+    at Request._callback (/usr/local/lib/node_modules/firebase-tools/lib/api.js:34:11)
+    at self.callback (/usr/local/lib/node_modules/firebase-tools/node_modules/_request@2.88.0@request/request.js:185:22)
+    at Request.emit (events.js:182:13)
+    at Request.EventEmitter.emit (domain.js:442:20)
+    at Request.onRequestError (/usr/local/lib/node_modules/firebase-tools/node_modules/_request@2.88.0@request/request.js:881:8)
+    at ClientRequest.emit (events.js:182:13)
+    at ClientRequest.EventEmitter.emit (domain.js:442:20)
+    at ClientRequest.onError (/usr/local/lib/node_modules/firebase-tools/node_modules/_tunnel-agent@0.6.0@tunnel-agent/index.js:179:21)
+    at Object.onceWrapper (events.js:273:13)
