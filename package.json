@@ -23,7 +23,9 @@
     "koa-static": "^5.0.0"
   },
   "dependencies": {
+    "@koa/cors": "^2.2.2",
     "axios": "^0.18.0",
+    "cors": "^2.8.4",
     "request": "^2.88.0"
   }
 }
