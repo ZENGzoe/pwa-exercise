@@ -4,6 +4,7 @@ var cacheName = 'news-v1',
         '/',
         './index.html',
         './js/index.js',
+        './js/lib.js',
         './css/index.css',
         './img/white.jpg'
     ],
@@ -68,4 +69,66 @@ self.addEventListener('fetch' , function(e){
             })
         )
     }
+})
+
+//监听push事件
+self.addEventListener('push' , function(e){
+    var data = e.data;
+    if(e.data){
+        data = data.json();
+        console.log('push的数据为：',data);
+        var title = data;
+        var options = {
+            body : 'PWA学习',
+            icon : '/img/icon_128.png',
+            actions : [{
+                action : 'show-jd',
+                title : '去京东'
+            },{
+                action : 'contact-me',
+                title : '联系我'
+            }],
+            tag : 'pwa-starter',
+            renotify : true
+        };
+        self.registration.showNotification(title,options);
+    }else{
+        console.log('push没有任何数据')
+    }
+})
+
+//监听用户点击消息
+self.addEventListener('notificationclick' , function(e){
+    var action = e.action;
+    console.log(`action tag:${e.notification.tag}`,`action:${action}`,e);
+
+    switch(action){
+        case 'show-jd' : 
+            console.log('show-jd');
+            break;
+        case 'contact-me' :
+            console.log('contact-me');
+            break;
+        default :
+            console.log(`未处理的action：${e.action}`);
+            action = 'default';
+            break;
+    }
+    
+
+    e.waitUntil(
+        self.clients.matchAll().then(function(clients){
+            if(!clients || clients.length == 0){
+                self.clients.openWindow && self.clients.openWindow('http://127.0.0.1:3034');
+                return;
+            }
+            
+            clients[0].focus && clients[0].focus();
+            clients.forEach(function(client){
+                client.postMessage(action);
+            })
+        })
+    )
+
+    e.notification.close();
 })

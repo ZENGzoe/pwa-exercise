@@ -72,3 +72,52 @@ body,html{
     text-align: center;
     font-size: 6vw;
 }
+.notification{
+    position: absolute;
+    background: #cca;
+    padding: 2vw 4vw;
+    color: #666;
+    right: 10px;
+    bottom: 10px;
+}
+.pushBox{
+    
+}
+.pushBox h1{
+    text-align: center;
+    color: #02cfd4;
+    font-family: '微软雅黑';
+    font-size: 6vw;
+    margin: 4vw auto;
+}
+.pushBox .pushwrap{
+    width:90%;
+    margin:0 auto;
+}
+.pushBox label{
+    color: #999;
+}
+.pushBox input{
+    width: 68vw;
+    height: 8vw;
+    border: 1px solid #02cfd4;
+    padding: 0 2vw;
+    outline: none;
+    color:#999;
+}
+.pushBox p{
+    margin-bottom:10px;
+}
+.pushBox .send{
+    display: block;
+    width: 17vw;
+    height: 8vw;
+    line-height: 8vw;
+    border: none;
+    background: #02cfd4;
+    color: #fff;
+    font-size: 4vw;
+    text-align: center;
+    text-decoration: none;
+    margin: 10px auto;
+}
