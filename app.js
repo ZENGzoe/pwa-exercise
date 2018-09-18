@@ -52,6 +52,7 @@ router.post('/subscription' , koaBody() , async ctx => {
     }
 })
 
+//推送消息接口
 router.post('/push' , koaBody() , async ctx => {
     let { uniqueid , payload } = ctx.request.body;
     let list = uniqueid ? await util.find({uniqueid}) : await util.findAll();
@@ -66,6 +67,14 @@ router.post('/push' , koaBody() , async ctx => {
         status
     }
 })
+
+router.get('/sync' , async (ctx , next) => {
+    console.log(`Hello ${ctx.request.query.name} , I have receiced your msg`);
+    ctx.response.body = {
+        status : 0
+    }
+})
+
 
 //向push service推送消息
 const options = {

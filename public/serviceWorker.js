@@ -12,6 +12,9 @@ var cacheName = 'news-v1',
         '/news?'
     ];
 
+
+
+
     //监听service worker安装事件
 self.addEventListener('install', function(e){
     console.log('install');
@@ -131,4 +134,115 @@ self.addEventListener('notificationclick' , function(e){
     )
 
     e.notification.close();
+})
+
+class DealData{
+    constructor(){
+        this.tagDatas = {};
+    }
+
+    once(tag , callback){
+        this.tagDatas[tag] || (this.tagDatas[tag] = []);
+        this.tagDatas[tag].push(callback);
+    }
+
+    trigger(tag , data){
+        this.tagDatas[tag] = this.tagDatas[tag] || [];
+        let tagCallback ;
+        while(tagCallback = this.tagDatas[tag].shift()){
+            tagCallback(data)
+        }
+    }
+}
+const dealData = new DealData();
+
+function openStore(storeName){
+    return new Promise(function(resolve , reject){
+        var request = indexedDB.open('PWA_DB' , 1);
+        request.onerror = function(e){
+            console.log('连接数据库失败')
+        }
+        request.onsuccess = function(e){
+            console.log('连接数据库成功');
+            resolve(e.target.result);
+        }
+    })
+}
+
+
+self.addEventListener('message' , function(e){
+    var data = JSON.parse(e.data);
+    var type = data.type;
+    var msg = data.msg;
+
+    console.log(`service worker收到消息 type: ${type} ; msg : ${JSON.stringify(msg)}`)
+
+    dealData.trigger(type , msg);
+})
+
+//监听用户同步事件
+self.addEventListener('sync' , function(e){
+    console.log(`service worker需要进行后台同步，tag:${e.tag}`,e);
+
+    var init = {
+        method : 'GET'
+    };
+
+    if(e.tag === 'sample_sync'){
+        var request = new Request(`/sync?name=xxx` , init);
+        
+        e.waitUntil(
+            fetch(request).then(function(response){
+                return response;
+            })
+        )
+    }else if(e.tag === 'sample_sync_event'){
+        let msgPromise = new Promise(function(resolve , reject){
+            dealData.once('bgsync' , function(data){
+                resolve(data)
+            });
+            setTimeout(resolve , 5000);
+        })
+
+        e.waitUntil(
+            msgPromise.then(function(data){
+                var name = data && data.name ? data.name : 'anonymous';
+                var request = new Request(`sync?name=${name}` , init);
+                return fetch(request)
+            }).then(function(response){
+                return response;
+            })
+        )
+    }else if(e.tag === 'sample_sync_db'){
+        var dbQueryPromise = new Promise(function(resolve , reject){
+            var STORE_NAME = 'SyncData';
+            openStore(e.tag).then(function(db){
+                try{
+                    var tx = db.transaction(STORE_NAME , 'readonly');
+                    var store = tx.objectStore(STORE_NAME);
+                    var dbRequest = store.get(e.tag);
+                    dbRequest.onsuccess = function(e){
+                        resolve(e.target.result);
+                    }
+                    dbRequest.onerror = function(err){
+                        reject(err);
+                    }
+                }catch(err){
+                    reject(err);       
+                }
+            })
+        })
+        e.waitUntil(
+            dbQueryPromise.then(function(data){
+                console.log(data);
+                var name = data && data.name ? data.name : 'anonymous';
+                var request = new Request(`sync?name=${name}` , init);
+                return fetch(request);
+            }).then(function(response){
+                return response;
+            })
+        )
+    }
+
+    
 })

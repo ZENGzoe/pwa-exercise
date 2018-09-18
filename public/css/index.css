@@ -121,3 +121,27 @@ body,html{
     text-decoration: none;
     margin: 10px auto;
 }
+.sync{
+    position: absolute;
+    background: #eab;
+    padding: 2vw 4vw;
+    color: #666;
+    right: 10px;
+    bottom: 60px;
+}
+.sync_event{
+    position: absolute;
+    background: #cad;
+    padding: 2vw 4vw;
+    color: #666;
+    right: 10px;
+    bottom: 107px;
+}
+.sync_db{
+    position: absolute;
+    background: #dee;
+    padding: 2vw 4vw;
+    color: #666;
+    right: 10px;
+    bottom: 154px;
+}
