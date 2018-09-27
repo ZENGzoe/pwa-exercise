@@ -135,26 +135,28 @@ self.addEventListener('notificationclick' , function(e){
 
     e.notification.close();
 })
-
-class DealData{
-    constructor(){
-        this.tagDatas = {};
+var receiveData = '';
+class SimpleEvent {
+    constructor() {
+        this.listenrs = {};
     }
 
-    once(tag , callback){
-        this.tagDatas[tag] || (this.tagDatas[tag] = []);
-        this.tagDatas[tag].push(callback);
+    once(tag, cb) {
+        this.listenrs[tag] || (this.listenrs[tag] = []);
+        this.listenrs[tag].push(cb);
     }
 
-    trigger(tag , data){
-        this.tagDatas[tag] = this.tagDatas[tag] || [];
-        let tagCallback ;
-        while(tagCallback = this.tagDatas[tag].shift()){
-            tagCallback(data)
+    trigger(tag, data) {
+        this.listenrs[tag] = this.listenrs[tag] || [];
+        let listenr;
+        console.log('cc',data);
+        while (listenr = this.listenrs[tag].shift()) {
+            listenr(data)
         }
     }
 }
-const dealData = new DealData();
+
+const simpleEvent = new SimpleEvent();
 
 function openStore(storeName){
     return new Promise(function(resolve , reject){
@@ -170,15 +172,15 @@ function openStore(storeName){
 }
 
 
-self.addEventListener('message' , function(e){
+
+self.addEventListener('message', function (e) {
     var data = JSON.parse(e.data);
     var type = data.type;
     var msg = data.msg;
-
-    console.log(`service worker收到消息 type: ${type} ; msg : ${JSON.stringify(msg)}`)
-
-    dealData.trigger(type , msg);
-})
+    console.log(`service worker收到消息 type：${type}；msg：${JSON.stringify(msg)}`);
+    receiveData = msg;
+    simpleEvent.trigger(type, msg);
+});
 
 //监听用户同步事件
 self.addEventListener('sync' , function(e){
@@ -197,22 +199,28 @@ self.addEventListener('sync' , function(e){
             })
         )
     }else if(e.tag === 'sample_sync_event'){
-        let msgPromise = new Promise(function(resolve , reject){
-            dealData.once('bgsync' , function(data){
-                resolve(data)
+        let msgPromise = new Promise(function (resolve, reject) {
+            // 监听message事件中触发的事件通知
+            simpleEvent.once('bgsync', function (data) {
+                resolve(data);
             });
-            setTimeout(resolve , 5000);
-        })
+            // 五秒超时
+            setTimeout(resolve, 5000);
+        });
 
         e.waitUntil(
-            msgPromise.then(function(data){
+            msgPromise.then(function (data) {
                 var name = data && data.name ? data.name : 'anonymous';
-                var request = new Request(`sync?name=${name}` , init);
+                
+                name = receiveData && receiveData.name ? receiveData.name  : name;
+                var request = new Request(`sync?name=${name}`, init);
+                
                 return fetch(request)
-            }).then(function(response){
+            }).then(function (response) {
+                response.json().then(console.log.bind(console));
                 return response;
             })
-        )
+        );
     }else if(e.tag === 'sample_sync_db'){
         var dbQueryPromise = new Promise(function(resolve , reject){
             var STORE_NAME = 'SyncData';
